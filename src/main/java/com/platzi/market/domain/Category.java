@@ -1,10 +1,13 @@
 package com.platzi.market.domain;
 
+import com.platzi.market.persistence.entity.Producto;
+
 public class Category {
 
     private int cateforyId;
     private String category;
     private boolean active;
+
 
     public int getCateforyId() {
         return cateforyId;

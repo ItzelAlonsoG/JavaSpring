@@ -30,7 +30,7 @@ public interface ProductMapper {
     // no es necesario escribirlo de nuevo y  como no estan mapeados todos los campos
     // podemos aplicar  target e ignore como true para que  ignore el campo al querer  convertir
     // de product a producto.
-    @InheritConfiguration
+    @InheritInverseConfiguration
     @Mapping(target = "codigoBarras", ignore = true)
     Producto toProducto (Product product);
 }

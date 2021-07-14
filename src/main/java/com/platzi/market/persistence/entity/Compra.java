@@ -39,6 +39,9 @@ public class Compra {
 
     private String estado;
 
+    public Cliente getCliente() {
+        return cliente;
+    }
 
     @ManyToOne
     // sirve para indicar la relacion de la clase producto con id_categoria de la tabla categoria y que no sea insertable ni editable
@@ -46,7 +49,11 @@ public class Compra {
     @JoinColumn(name = "id_cliente", insertable = false,updatable = false)
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "producto")
+    //cascade le indicamos que se guardara en forma de castada
+    //todos los procesos que se hagan en procesos en la BD se atenderan en cascada
+    //los productos
+
+    @OneToMany(mappedBy = "compra", cascade = {CascadeType.ALL})
     private List<ComprasProducto> productos;
 
     public Integer getIdCompra() {
@@ -95,5 +102,17 @@ public class Compra {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public List<ComprasProducto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<ComprasProducto> productos) {
+        this.productos = productos;
     }
 }
