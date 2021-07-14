@@ -2,6 +2,10 @@ package com.platzi.market.web.controller;
 
 import com.platzi.market.domain.Product;
 import com.platzi.market.domain.service.ProductoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,13 +22,20 @@ public class ProductController {
     private ProductoService productoService;
 
     @GetMapping("all")
-
+    @ApiOperation("Get all supermarket products")
+    @ApiResponse(code = 200 , message = "OK")
     public ResponseEntity<List<Product>> getAll(){
         return new ResponseEntity<>(productoService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Product>getProduct (@PathVariable("id") int productId){
+    @ApiOperation("Search product with an ID")
+    @ApiResponses({
+            @ApiResponse(code=200, message = "OK"),
+            @ApiResponse(code=404, message = "Product not found")
+
+    })
+    public ResponseEntity<Product>getProduct (@ApiParam(value = "The id of the producto",required = true,example = "7") @PathVariable("id") int productId){
         return productoService.getProduct(productId)
                 .map(product -> new ResponseEntity<>(product,HttpStatus.OK))
                 .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
